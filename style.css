@@ -30,6 +30,8 @@ button {
 
 .equals {
     color: #ffd700;
+    border-radius: 20px;
+    border: 8px solid orchid;
 }
 
 .calc-screen {
@@ -74,11 +76,12 @@ button {
 
 .wide-button,
 .small-button {
+    font-size: 18px;
+    font-weight: 900;
     background-color: rgb(34,37,44);
 }
 
 .wide-button,
-.equals,
 .operator {
     border-radius: 20px;
     border: 8px solid aquamarine;
