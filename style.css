@@ -1,0 +1,24 @@
+.calc-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row-1,
+.row-2,
+.row-3,
+.row-4,
+.row-5 {
+    display: flex;
+    gap: 10px;
+}
+
+.small-button {
+    width: 81.5px;
+    height: 67.5px;
+}
+
+.wide-button {
+    width: 173px;
+    height: 67.5px;
+}
