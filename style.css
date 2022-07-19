@@ -4,6 +4,7 @@ body {
     height: 100vh;
     overflow: hidden;
     justify-content: space-between;
+    background-color: rgb(34,37,44);
     align-items: center;
 }
 
@@ -18,6 +19,7 @@ button {
     margin-bottom: auto;
     background-color: rgb(34,37,44);
     border-radius: 20px;
+    border: 10px solid aquamarine;
 }
 
 .calc-screen,
@@ -59,7 +61,6 @@ button {
     background-color: rgb(41,45,53);
     border-radius: 20px;
     padding: 20px;
-    padding-top: 40px;
 }
 
 .row-1,
@@ -73,7 +74,19 @@ button {
 
 .wide-button,
 .small-button {
-    background-color: rgb(39,43,50);
+    background-color: rgb(34,37,44);
+}
+
+.wide-button,
+.equals,
+.operator {
+    border-radius: 20px;
+    border: 8px solid aquamarine;
+}
+
+.digit {
+    border-radius: 20px;
+    border: 8px solid coral;
 }
 
 .small-button {
@@ -97,10 +110,12 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    color: white;
+    font-weight: 600;
 }
 
 .fa-github {
-    color: black;
+    color: white;
     font-size: 24px;
     transition: transform 0.3s ease-in-out;
 }
