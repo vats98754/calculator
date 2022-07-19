@@ -28,10 +28,10 @@ const operate = function(operator, a, b) {
     }
 }
 
-// Exporting core calculation functions for Jest testing
-module.exports = {
-    add,
-    subtract,
-    multiply,
-    divide
-};
+// // Exporting core calculation functions for Jest testing
+// module.exports = {
+//     add,
+//     subtract,
+//     multiply,
+//     divide
+// };
