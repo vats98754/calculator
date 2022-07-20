@@ -40,27 +40,24 @@ const currNum = document.querySelector('.current-num');
 let firstNum = 0;
 let secondNum = 1;
 let currOperator = '+';
+let prevButton = '';
 
 // Add EventListener to each button to read its value
 const btns = document.querySelectorAll('button');
+const btnDecimal = document.querySelector('.decimal');
 btns.forEach(btn => {
     btn.addEventListener('click', e => {
         const btnValue = btn.textContent;
-        if (currNum.textContent.includes('.')) {
-            btn.disabled = true;
-        } else {
-            btn.disabled = false;
-        }
         if (operators[btnValue] !== undefined) {
             const operator = operators[btnValue];
+            // Ensures '-' can be used to initiate the calculation (i.e. negative numbers work)
             if (currNum.textContent === '' && operator === '-'){
                 currNum.textContent += operator;
-                history.textContent += `${firstNum} ${operator} `;
             } else if (currNum.textContent !== '') {
                 currOperator = operator;
                 firstNum = currNum.textContent;
                 currNum.textContent = '';
-                history.textContent += `${firstNum} ${operator} `;
+                history.textContent += `${firstNum} ${btn.textContent} `;
             }
         } else if (parseInt(btnValue) == btnValue) {
             currNum.textContent += btnValue;
@@ -70,16 +67,24 @@ btns.forEach(btn => {
             firstNum = 0;
             secondNum = 1;
         } else if (btnValue === '=') {
-            firstNum = history.textContent.split(" ")[0];
-            secondNum = currNum.textContent;
+            firstNum = parseFloat(history.textContent.split(" ")[0]);
+            secondNum = parseFloat(currNum.textContent);
             currNum.textContent = '';
-            history.textContent += `${secondNum} ${currOperator} =`;
+            history.textContent += `${secondNum} =`;
             const result = operate(currOperator, firstNum, secondNum);
             currNum.textContent = result;
+            prevButton = btnValue;
         } else if (btnValue === '.') {
             currNum.textContent += btnValue;
         } else if (btnValue === '⌫') {
             currNum.textContent = currNum.textContent.slice(0, -1);
+        }
+
+        // Disallows double usage of decimal in one number
+        if (currNum.textContent.includes('.')) {
+            btnDecimal.disabled = true;
+        } else {
+            btnDecimal.disabled = false;
         }
     });
 });
