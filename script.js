@@ -40,7 +40,6 @@ const currNum = document.querySelector('.current-num');
 let firstNum = 0;
 let secondNum = 1;
 let currOperator = '+';
-let prevButtonTest = '';
 
 // Add EventListener to each button to read its value
 const btns = document.querySelectorAll('button');
@@ -59,7 +58,7 @@ btns.forEach(btn => {
                 currOperator = operator;
                 firstNum = currNum.textContent;
                 currNum.textContent = '';
-                history.textContent += `${firstNum} ${btn.textContent} `;
+                history.textContent = `${firstNum} ${btn.textContent} `;
             }
         }
         // Checks non-operator button pressed
@@ -77,7 +76,6 @@ btns.forEach(btn => {
             history.textContent += `${secondNum} =`;
             const result = operate(currOperator, firstNum, secondNum);
             currNum.textContent = result;
-            prevButton = btnValue;
         } else if (btnValue === '.') {
             currNum.textContent += btnValue;
         } else if (btnValue === '⌫') {
@@ -97,6 +95,7 @@ btns.forEach(btn => {
             // Allows equal sign after operator
             btnEquals.disabled = false;
         }
+        firstNum = parseFloat(currNum.textContent);
     });
 });
 
