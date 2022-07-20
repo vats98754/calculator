@@ -40,16 +40,18 @@ const currNum = document.querySelector('.current-num');
 let firstNum = 0;
 let secondNum = 1;
 let currOperator = '+';
-let prevButton = '';
+let prevButtonTest = '';
 
 // Add EventListener to each button to read its value
 const btns = document.querySelectorAll('button');
 const btnDecimal = document.querySelector('.decimal');
+const btnEquals = document.querySelector('.equals');
 btns.forEach(btn => {
     btn.addEventListener('click', e => {
         const btnValue = btn.textContent;
         if (operators[btnValue] !== undefined) {
             const operator = operators[btnValue];
+
             // Ensures '-' can be used to initiate the calculation (i.e. negative numbers work)
             if (currNum.textContent === '' && operator === '-'){
                 currNum.textContent += operator;
@@ -59,7 +61,9 @@ btns.forEach(btn => {
                 currNum.textContent = '';
                 history.textContent += `${firstNum} ${btn.textContent} `;
             }
-        } else if (parseInt(btnValue) == btnValue) {
+        }
+        // Checks non-operator button pressed
+        else if (parseInt(btnValue) == btnValue) {
             currNum.textContent += btnValue;
         } else if (btnValue === 'AC') {
             currNum.textContent = '';
@@ -85,6 +89,13 @@ btns.forEach(btn => {
             btnDecimal.disabled = true;
         } else {
             btnDecimal.disabled = false;
+        }
+        if (operators[btnValue] !== undefined) {
+            // Disallows equal sign after operator
+            btnEquals.disabled = true;
+        } else {
+            // Allows equal sign after operator
+            btnEquals.disabled = false;
         }
     });
 });
