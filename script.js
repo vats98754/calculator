@@ -51,6 +51,14 @@ const resultDisplay = function(usedKey) {
     }
 }
 
+const keyToButton = function(e) {
+    const btn = document.querySelector(`button[data-key="${e.keyCode}"]`);
+    btn.click();
+}
+
+// To match key-presses to their corresponding buttons and activate the latter when appropriate
+window.addEventListener("keydown", keyToButton);
+
 // Below object converts clicked operator's button value so it can be used in operate()
 const operators = {
     '+': '+',
@@ -114,11 +122,11 @@ btns.forEach(btn => {
         }
 
         // Ensures that '=' can't be used after an operator
-        if (operators[btnValue] !== undefined) {
-            // Disallows equal sign after operator
+        if (operators[btnValue] !== undefined || btnValue === '=') {
+            // Disallows equal sign after operator/equals
             btnEquals.disabled = true;
         } else {
-            // Allows equal sign after operator
+            // Allows equal sign after non-operator/non-equals
             btnEquals.disabled = false;
         }
         // Gets the firstNum again
@@ -126,11 +134,11 @@ btns.forEach(btn => {
     });
 });
 
-// Exporting core calculation functions for Jest testing
-module.exports = {
-    add,
-    subtract,
-    multiply,
-    divide,
-    operate
-};
+// // Exporting core calculation functions for Jest testing
+// module.exports = {
+//     add,
+//     subtract,
+//     multiply,
+//     divide,
+//     operate
+// };
