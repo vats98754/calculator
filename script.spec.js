@@ -33,10 +33,28 @@ describe('multiply', () => {
 
 describe('divide', () => {
 	test('divides two numbers and outputs an integer where appropriate', () => {
-		expect(calculator.multiply(16,4)).toBe(4);
+		expect(calculator.divide(16,4)).toBe(4);
 	});
 
 	test('divides to a non-integer', () => {
-		expect(calculator.multiply(6,8)).toBe(0.75);
+		expect(calculator.divide(6,8)).toBe(0.75);
+	});
+});
+
+describe('operate', () => {
+	test('adds two numbers', () => {
+		expect(calculator.operate('+',4,5)).toBe(9);
+	});
+
+	test('subtracts two numbers', () => {
+		expect(calculator.operate('-',4,5)).toBe(20);
+	});
+
+	test('multiplies two numbers', () => {
+		expect(calculator.operate('*',4,5)).toBe(-1);
+	});
+
+	test('divides two numbers', () => {
+		expect(calculator.operate('/',4,5)).toBe(0.8);
 	});
 });

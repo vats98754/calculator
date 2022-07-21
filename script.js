@@ -51,6 +51,7 @@ const resultDisplay = function(usedKey) {
     }
 }
 
+// Below object converts clicked operator's button value so it can be used in operate()
 const operators = {
     '+': '+',
     '-': '-',
@@ -58,12 +59,14 @@ const operators = {
     '÷': '/'
 };
 
-const history = document.querySelector('.history');
-const currNum = document.querySelector('.current-num');
+// The below two lines select the 2 important display elements on calc-screen
+const history = document.querySelector('.history'); // Shows previous calculations
+const currNum = document.querySelector('.current-num'); // Shows current result
+
+// The store the numbers and operator to pass into operate()
 let firstNum = 0;
 let secondNum = 0;
-let currOperator = '';
-let btnValue;
+let btnValue; // made this global for access by resultDisplay() for when history empty/first calculation happens
 
 // Add EventListener to each button to read its value
 const btns = document.querySelectorAll('button');
@@ -86,28 +89,31 @@ btns.forEach(btn => {
                 resultDisplay(operator);
             }
         }
+
         // Checks non-operator button pressed
-        else if (parseInt(btnValue) == btnValue) {
+        else if (parseInt(btnValue) == btnValue) { // If digit pressed, append to current number
             currNum.textContent += btnValue;
-        } else if (btnValue === 'AC') {
+        } else if (btnValue === 'AC') { // If 'AC' pressed, clears everything and resets first and second nums
             currNum.textContent = '';
             history.textContent = '';
             firstNum = 0;
             secondNum = 1;
-        } else if (btnValue === '=') {
+        } else if (btnValue === '=') { // If '=' pressed, history shows expression, currNum shows its result
             resultDisplay('=');
         } else if (btnValue === '.') {
             currNum.textContent += btnValue;
-        } else if (btnValue === '⌫') {
+        } else if (btnValue === '⌫') { // Slices currNum such that last char is removed
             currNum.textContent = currNum.textContent.slice(0, -1);
         }
 
-        // Disallows double usage of decimal in one number
+        // Disallows double usage of decimal in the same number
         if (currNum.textContent.includes('.')) {
             btnDecimal.disabled = true;
         } else {
             btnDecimal.disabled = false;
         }
+
+        // Ensures that '=' can't be used after an operator
         if (operators[btnValue] !== undefined) {
             // Disallows equal sign after operator
             btnEquals.disabled = true;
@@ -115,14 +121,16 @@ btns.forEach(btn => {
             // Allows equal sign after operator
             btnEquals.disabled = false;
         }
+        // Gets the firstNum again
         firstNum = parseFloat(currNum.textContent);
     });
 });
 
-// // Exporting core calculation functions for Jest testing
-// module.exports = {
-//     add,
-//     subtract,
-//     multiply,
-//     divide
-// };
+// Exporting core calculation functions for Jest testing
+module.exports = {
+    add,
+    subtract,
+    multiply,
+    divide,
+    operate
+};
