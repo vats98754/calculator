@@ -28,6 +28,29 @@ const operate = function(operator, a, b) {
     }
 }
 
+const resultDisplay = function(usedKey) {
+    // Checks if the very first calculation is being performed
+    if (history.textContent === '') {
+        history.textContent = `${currNum.textContent} ${btnValue} `;
+        currNum.textContent = '';
+        return;
+    }
+    // If it's beyond the first calculation
+    firstNum = parseFloat(history.textContent.split(" ")[0]);
+    secondNum = parseFloat(currNum.textContent);
+    currNum.textContent = '';
+    const result = operate(operatorQueue[0], firstNum, secondNum);
+    operatorQueue.shift(0);
+    if (usedKey === "="){
+        history.textContent += `${secondNum} =`;
+        currNum.textContent = result;
+    } else {
+        firstNum = currNum.textContent;
+        currNum.textContent = '';
+        history.textContent = `${result} ${btnValue} `;
+    }
+}
+
 const operators = {
     '+': '+',
     '-': '-',
@@ -38,27 +61,29 @@ const operators = {
 const history = document.querySelector('.history');
 const currNum = document.querySelector('.current-num');
 let firstNum = 0;
-let secondNum = 1;
-let currOperator = '+';
+let secondNum = 0;
+let currOperator = '';
+let btnValue;
 
 // Add EventListener to each button to read its value
 const btns = document.querySelectorAll('button');
 const btnDecimal = document.querySelector('.decimal');
 const btnEquals = document.querySelector('.equals');
+const operatorQueue = [];
 btns.forEach(btn => {
     btn.addEventListener('click', e => {
-        const btnValue = btn.textContent;
+        btnValue = btn.textContent;
         if (operators[btnValue] !== undefined) {
             const operator = operators[btnValue];
 
             // Ensures '-' can be used to initiate the calculation (i.e. negative numbers work)
             if (currNum.textContent === '' && operator === '-'){
                 currNum.textContent += operator;
-            } else if (currNum.textContent !== '') {
-                currOperator = operator;
-                firstNum = currNum.textContent;
-                currNum.textContent = '';
-                history.textContent = `${firstNum} ${btn.textContent} `;
+            } 
+            // Executes below if operator typed with preceding calculations/operands
+            else if (currNum.textContent !== '') {
+                operatorQueue.push(operator);
+                resultDisplay(operator);
             }
         }
         // Checks non-operator button pressed
@@ -70,12 +95,7 @@ btns.forEach(btn => {
             firstNum = 0;
             secondNum = 1;
         } else if (btnValue === '=') {
-            firstNum = parseFloat(history.textContent.split(" ")[0]);
-            secondNum = parseFloat(currNum.textContent);
-            currNum.textContent = '';
-            history.textContent += `${secondNum} =`;
-            const result = operate(currOperator, firstNum, secondNum);
-            currNum.textContent = result;
+            resultDisplay('=');
         } else if (btnValue === '.') {
             currNum.textContent += btnValue;
         } else if (btnValue === '⌫') {
